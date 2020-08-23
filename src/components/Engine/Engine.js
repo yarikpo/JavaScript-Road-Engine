@@ -48,6 +48,7 @@ export class Engine {
         )) {
             if (DEBUG) console.log('Rect in rendering area.');
 
+            // drawing rect
             this.ctx.rect(
                 leftUpPoint.getCord.x - this.renderPointOne.getCord.x,
                 this.renderPointOne.getCord.y - leftUpPoint.getCord.y,
@@ -59,6 +60,10 @@ export class Engine {
 
         this.ctx.fill();
         this.ctx.closePath();
+    }
+
+    render(object) {
+        object.render(this.ctx, this.renderPointOne, this.renderPointTwo);
     }
 }
 

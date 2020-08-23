@@ -12,9 +12,10 @@ export class Point {
         return response;
     }
 
-    setCord(x, y) {
+    setCord(x, y, DEBUG=false) {
         this.x = x;
         this.y = y;
-        console.log('Cords changed');
+
+        if (DEBUG) console.log('Point cords have been changed');
     }
 }

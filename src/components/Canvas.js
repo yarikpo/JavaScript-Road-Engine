@@ -3,6 +3,7 @@ import './Canvas.css';
 
 import {Engine} from './Engine/Engine';
 import {Point} from './Engine/figures/Point';
+import {Line} from './Engine/figures/Line';
 
 const DEBUG = false;
 
@@ -74,8 +75,8 @@ class Canvas extends React.Component {
                 this.state.renderShowTopLeftCordY
             );
             const renderPointTwo = new Point(
-                this.state.renderTopLeftCordX + this.state.windowWidth,
-                this.state.renderTopLeftCordY - this.state.windowHeight
+                this.state.renderShowTopLeftCordX + this.state.windowWidth,
+                this.state.renderShowTopLeftCordY - this.state.windowHeight
             );
             // creates engine -> and turns on user camera(all info on screen)
             const eng = new Engine(ctx, renderPointOne, renderPointTwo);
@@ -85,12 +86,16 @@ class Canvas extends React.Component {
             const rectPointTwo = new Point(300, 200);
             // creates and displays a rectangle
             eng.rect(rectPointOne, rectPointTwo);
+            // creates and displays line
+            eng.render(new Line(new Point(400, 400), new Point(500, 500)));
+            eng.render(new Line(new Point(600, 600), new Point(800, 550)));
 
         }, this.state.animationInterval);
     }
 
     // mouse listeners
     handleMouseMoveListener(e) {
+        // this.updateCanvas();
         if (this.state.ifMousePressed === true) {
             // position of top left corner of replaces user's camera
             let changedMoveX = this.state.renderTopLeftCordX - e.offsetX + this.state.fromMoveX;
@@ -110,12 +115,20 @@ class Canvas extends React.Component {
         if (DEBUG) console.log(`X: ${e.offsetX}`);
         if (DEBUG) console.log(`Y: ${e.offsetY}`);
 
-        // remembers position where mouse was clicked
-        this.setState({ 
-            ifMousePressed: true, 
-            fromMoveX: e.offsetX, 
-            fromMoveY: e.offsetY 
-        });
+        // checks if curson is in canvas field
+        if (e.offsetX > 0 && 
+            e.offsetY > 0 && 
+            e.offsetX < this.state.windowWidth && 
+            e.offsetY < this.state.windowHeight
+        ) {
+            // remembers position where mouse was clicked
+            this.setState({ 
+                ifMousePressed: true, 
+                fromMoveX: e.offsetX, 
+                fromMoveY: e.offsetY 
+            });
+        }
+        
     }
 
     handleMouseUpListener(e) {
