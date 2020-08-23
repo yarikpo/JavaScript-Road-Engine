@@ -1,7 +1,14 @@
+/*
+I almost didn't commented this file because it could be changed
+in any tme
+*/
+
+
 import {Point} from './figures/Point';
 
 const DEBUG = false;
 
+// import {Engine} from 'path/to/Engine'
 export class Engine {
     constructor(ctx, renderPointOne, renderPointTwo) {
         this.ctx = ctx;

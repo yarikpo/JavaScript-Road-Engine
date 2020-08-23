@@ -4,6 +4,8 @@ import './Canvas.css';
 import {Engine} from './Engine/Engine';
 import {Point} from './Engine/figures/Point';
 import {Line} from './Engine/figures/Line';
+import {MultiLine} from './Engine/figures/MultiLine';
+import {Polygon} from './Engine/figures/Polygon';
 
 const DEBUG = false;
 
@@ -89,6 +91,33 @@ class Canvas extends React.Component {
             // creates and displays line
             eng.render(new Line(new Point(400, 400), new Point(500, 500)));
             eng.render(new Line(new Point(600, 600), new Point(800, 550)));
+
+            const multiLine = new MultiLine([
+                new Point(20, 30),
+                new Point(40, 500),
+                new Point(90, 70),
+                new Point(500, 400)
+            ]);
+            // adds new point to multiline
+            multiLine.addPoint(new Point(600, 100));
+            // deletes i point
+            multiLine.deleteCord(2);
+
+            const polygon = new Polygon([
+                new Point(600, 100),
+                new Point(650, 200),
+                new Point(700, 100)
+            ]);
+            polygon.addPoint(new Point(800, 600));
+            // render polygon
+            eng.render(polygon);
+
+            eng.render(new Point(100, 300));
+
+            // render multiline
+            eng.render(multiLine);
+
+            
 
         }, this.state.animationInterval);
     }
