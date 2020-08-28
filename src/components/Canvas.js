@@ -33,7 +33,11 @@ class Canvas extends React.Component {
             renderShowTopLeftCordY: 600,
             // cors of mouse during click / changes after mousedown event
             fromMoveX: undefined,
-            fromMoveY: undefined
+            fromMoveY: undefined,
+            // scale variable
+            scalePlus: 1.25,
+            scaleMinus: 0.8,
+            scale: 1
         };
 
         this.updateCanvas = this.updateCanvas.bind(this);
@@ -41,6 +45,9 @@ class Canvas extends React.Component {
         this.handleMouseDownListener = this.handleMouseDownListener.bind(this);
         this.handleMouseMoveListener = this.handleMouseMoveListener.bind(this);
         this.handleMouseUpListener = this.handleMouseUpListener.bind(this);
+
+        this.handleClickScalePlus = this.handleClickScalePlus.bind(this);
+        this.handleClickScaleMinus = this.handleClickScaleMinus.bind(this);
     }
 
     componentDidMount() {
@@ -69,16 +76,16 @@ class Canvas extends React.Component {
         setInterval(() => {
             const ctx = this.refs.canvas.getContext('2d');
             // clears screen
-            ctx.clearRect(0, 0, this.state.windowWidth, this.state.windowHeight);
+            ctx.clearRect(0, 0, this.state.windowWidth * this.state.scale, this.state.windowHeight * this.state.scale);
 
             // creates two points which shows position of user camera
             const renderPointOne = new Point(
-                this.state.renderShowTopLeftCordX, 
-                this.state.renderShowTopLeftCordY
+                (this.state.renderShowTopLeftCordX) * this.state.scale, 
+                (this.state.renderShowTopLeftCordY) * this.state.scale
             );
             const renderPointTwo = new Point(
-                this.state.renderShowTopLeftCordX + this.state.windowWidth,
-                this.state.renderShowTopLeftCordY - this.state.windowHeight
+                (this.state.renderShowTopLeftCordX + this.state.windowWidth) * this.state.scale,
+                (this.state.renderShowTopLeftCordY - this.state.windowHeight) * this.state.scale
             );
             // creates engine -> and turns on user camera(all info on screen)
             const eng = new Engine(ctx, renderPointOne, renderPointTwo);
@@ -119,9 +126,28 @@ class Canvas extends React.Component {
             // render multiline
             eng.render(multiLine);
 
-            
+            // clearing space
+            Object.keys(eng).forEach(key => delete eng[key]);
+            Object.keys(ctx).forEach(key => delete ctx[key]);
 
         }, this.state.animationInterval);
+    }
+
+    // scale
+    handleClickScalePlus(e) {
+        const ctx = this.refs.canvas.getContext('2d');
+        const scl = this.state.scale;
+        ctx.scale(this.state.scalePlus, this.state.scalePlus);
+        this.setState({ scale: scl * this.state.scaleMinus });
+        Object.keys(ctx).forEach(key => delete ctx[key]);
+    }
+
+    handleClickScaleMinus(e) {
+        const ctx = this.refs.canvas.getContext('2d');
+        const scl = this.state.scale;
+        ctx.scale(this.state.scaleMinus, this.state.scaleMinus);
+        this.setState({ scale: scl * this.state.scalePlus });
+        Object.keys(ctx).forEach(key => delete ctx[key]);
     }
 
     // mouse listeners
@@ -186,6 +212,8 @@ class Canvas extends React.Component {
                 }}
             >
                 <canvas ref='canvas' width={this.state.windowWidth} height={this.state.windowHeight} />
+                <button onClick={this.handleClickScalePlus}>+</button>
+                <button onClick={this.handleClickScaleMinus}>-</button>
             </div>
         )
     }

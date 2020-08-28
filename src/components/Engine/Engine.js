@@ -69,6 +69,7 @@ export class Engine {
         this.ctx.closePath();
     }
 
+
     render(object) {
         object.render(this.ctx, this.renderPointOne, this.renderPointTwo);
     }
