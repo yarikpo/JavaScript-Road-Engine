@@ -5,11 +5,12 @@ export class Line {
 /*
     receives 2 points
     usage:
-        new Line(new Point(x1, y1), new Point(x2, y2))
+        new Line(new Point(x1, y1), new Point(x2, y2), { color: 'red', width: 10 })
 */
-    constructor(point1, point2) {
+    constructor(point1, point2, style=undefined) {
         this.pointOne = new Point(point1.getCord.x, point1.getCord.y);
         this.pointTwo = new Point(point2.getCord.x, point2.getCord.y);
+        this.style = style;
     }
 
 /*
@@ -132,7 +133,13 @@ export class Line {
         // checks if line is located in render area
         if (this._isVisible(renderPointOne, renderPointTwo)) {
             ctx.beginPath();
-            ctx.lineWidth = 1;
+            // checks line for styles
+            if (this.style != null && this.style.color != null) ctx.strokeStyle = this.style.color;
+            else ctx.strokeStyle = '#000';
+            if (this.style != null && this.style.width != null) ctx.lineWidth = this.style.width;
+            else ctx.lineWidth = 1;
+
+            // draws line
             ctx.moveTo(
                 this.pointOne.getCord.x - renderPointOne.getCord.x,
                 renderPointOne.getCord.y - this.pointOne.getCord.y
@@ -143,6 +150,10 @@ export class Line {
             );
 
             ctx.stroke();
+            // sets values to defaults
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 1;
+            
             ctx.closePath();
         }
     }

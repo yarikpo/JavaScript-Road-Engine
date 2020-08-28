@@ -4,11 +4,13 @@ export class Point {
 /*
     receives coordinates of point
     usage:
-        new Point(x, y)
+        new Point(x, y, {radius: 2, color: 'red})
 */
-    constructor(x, y) {
+    constructor(x, y, style=undefined) {
         this.x = x;
         this.y = y;
+
+        this.style = style;
     }
 
 /*
@@ -58,12 +60,20 @@ export class Point {
         Object.render(ctx, renderPointOne, renderPointTwo)
 */
     render(ctx, renderPointOne, renderPointTwo) {
+        let radius, color;
+        if (this.style != null && this.style.radius != null) radius = this.style.radius;
+        else radius = 1;
+        if (this.style != null && this.style.color != null) color = this.style.color;
+        else color = '#000';
+
         if (this.__insideCamera(new Point(this.x, this.y), renderPointOne, renderPointTwo)) {
             ctx.beginPath();
 
-            ctx.arc(this.x, this.y, 1, 0, Math.PI * 2, false);
+            ctx.fillStyle = color;
+            ctx.arc(this.x - renderPointOne.getCord.x, renderPointOne.getCord.y - this.y, radius, 0, Math.PI * 2, false);
 
             ctx.fill();
+            ctx.fillStyle = '#000';
             ctx.closePath();
         }
     }

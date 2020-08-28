@@ -6,13 +6,15 @@ export class MultiLine {
 /*
     receives array of points
     usage:
-        new Multiline([new Point(x1, y1), new Point(x2, y2), ...)])
+        new Multiline([new Point(x1, y1), new Point(x2, y2), ...)], { color: 'red', width: 2 })
 */
-    constructor(pointArray) {
+    constructor(pointArray, style=undefined) {
         // array of points (lines of whome will be rendered)
         this.pointArray = pointArray;
         // array of lines
         this.lineArray = [];
+        // multiline styles
+        this.style = style;
     }
 
 /*
@@ -84,7 +86,8 @@ export class MultiLine {
             this.lineArray.push(
                 new Line(
                     new Point(this.pointArray[i].getCord.x, this.pointArray[i].getCord.y), 
-                    new Point(this.pointArray[i + 1].getCord.x, this.pointArray[i + 1].getCord.y)
+                    new Point(this.pointArray[i + 1].getCord.x, this.pointArray[i + 1].getCord.y),
+                    this.style
                 )
             );
         }

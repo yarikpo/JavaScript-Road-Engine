@@ -5,10 +5,11 @@ export class Polygon {
 /*
     receives array of points
     usage:
-        new Polygon([new Point(x1, y1), new Point(x2,y2), ...])
+        new Polygon([new Point(x1, y1), new Point(x2,y2), ...], { color: 'pink' })
 */
-    constructor(pointArray) {
+    constructor(pointArray, style=undefined) {
         this.pointArray = pointArray;
+        this.style = style;
     }
 
 /*
@@ -92,6 +93,9 @@ export class Polygon {
         if (this._isVisible(renderPointOne, renderPointTwo)) {
             ctx.beginPath();
 
+            if (this.style != null && this.style.color != null) ctx.fillStyle = this.style.color;
+            else ctx.fillStyle = '#000';
+
             this.pointArray.forEach((point, pos) => {
                 if (pos === 0) ctx.moveTo(
                     point.getCord.x - renderPointOne.getCord.x, 
@@ -104,6 +108,7 @@ export class Polygon {
             });
 
             ctx.fill();
+            ctx.fillStyle = '#000';
             ctx.closePath();
         }
     }

@@ -97,7 +97,7 @@ class Canvas extends React.Component {
                 new Point(40, 500),
                 new Point(90, 70),
                 new Point(500, 400)
-            ]);
+            ], { color: 'red', width: 2 });
             // adds new point to multiline
             multiLine.addPoint(new Point(600, 100));
             // deletes i point
@@ -107,12 +107,14 @@ class Canvas extends React.Component {
                 new Point(600, 100),
                 new Point(650, 200),
                 new Point(700, 100)
-            ]);
+            ], { color: 'blue' });
             polygon.addPoint(new Point(800, 600));
             // render polygon
             eng.render(polygon);
 
             eng.render(new Point(100, 300));
+
+            eng.render(new Line(new Point(0, 600), new Point(800, 0), { color: 'green', width: 10 }));
 
             // render multiline
             eng.render(multiLine);
