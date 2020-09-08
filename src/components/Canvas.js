@@ -6,6 +6,7 @@ import {Point} from './Engine/figures/Point';
 import {Line} from './Engine/figures/Line';
 import {MultiLine} from './Engine/figures/MultiLine';
 import {Polygon} from './Engine/figures/Polygon';
+import {SimpleCar} from './Engine/figures/Cars/SimpleCar';
 
 const DEBUG = false;
 
@@ -37,7 +38,11 @@ class Canvas extends React.Component {
             // scale variable
             scalePlus: 1.25,
             scaleMinus: 0.8,
-            scale: 1
+            scale: 1,
+            // position of each car
+            carPositions: [],
+            // certanly got positions of each car
+            newCarPositions: []
         };
 
         this.updateCanvas = this.updateCanvas.bind(this);
@@ -74,6 +79,23 @@ class Canvas extends React.Component {
     updateCanvas() {
         // repeats action each animation interval
         setInterval(() => {
+            // get data from server
+            if (false) {
+                const url = 'http://localhost:3001/api/blabla';
+                fetch(url, {
+                    'method': 'GET',
+                    headers: {
+                        'Content-type': 'application/json',
+                        'Accept': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(response => this.setState({ newCarPositions: response }))
+                    .catch(err => console.log('Cant get data from server.'));
+            }
+
+
             const ctx = this.refs.canvas.getContext('2d');
             // clears screen
             ctx.clearRect(0, 0, this.state.windowWidth * this.state.scale, this.state.windowHeight * this.state.scale);
@@ -125,6 +147,15 @@ class Canvas extends React.Component {
 
             // render multiline
             eng.render(multiLine);
+
+            // render car
+            const car = new SimpleCar(new Point(100, 100), new Point(100, 100), 10, {
+                color: '#c23',
+                width: 1
+            }, {
+                color: '#222'
+            });
+            eng.render(car);
 
             // clearing space
             Object.keys(eng).forEach(key => delete eng[key]);
