@@ -112,13 +112,20 @@ class Canvas extends React.Component {
             // creates engine -> and turns on user camera(all info on screen)
             const eng = new Engine(ctx, renderPointOne, renderPointTwo);
 
+
+            // turn screen
+            // ctx.translate(10, 10);
+            // ctx.rotate((180 / Math.PI) * 5);
+            // 
+
+
             // creates two points which will help to display rectangle later
             const rectPointOne = new Point(200, 300);
             const rectPointTwo = new Point(300, 200);
             // creates and displays a rectangle
             eng.rect(rectPointOne, rectPointTwo);
             // creates and displays line
-            eng.render(new Line(new Point(400, 400), new Point(500, 500)));
+            eng.render(new Line(new Point(400, 400), new Point(500, 500), { rotate: 0 }));
             eng.render(new Line(new Point(600, 600), new Point(800, 550)));
 
             const multiLine = new MultiLine([
@@ -126,7 +133,7 @@ class Canvas extends React.Component {
                 new Point(40, 500),
                 new Point(90, 70),
                 new Point(500, 400)
-            ], { color: 'red', width: 2 });
+            ], { color: 'red', width: 2, rotate: 0 });
             // adds new point to multiline
             multiLine.addPoint(new Point(600, 100));
             // deletes i point
@@ -136,20 +143,20 @@ class Canvas extends React.Component {
                 new Point(600, 100),
                 new Point(650, 200),
                 new Point(700, 100)
-            ], { color: 'blue' });
+            ], { color: 'blue', rotate: 0 });
             polygon.addPoint(new Point(800, 600));
             // render polygon
             eng.render(polygon);
 
-            eng.render(new Point(100, 300));
+            eng.render(new Point(100, 300, {color: 'red', radius: 5, rotate: 0}));
 
-            eng.render(new Line(new Point(0, 600), new Point(800, 0), { color: 'green', width: 10 }));
+            eng.render(new Line(new Point(0, 600), new Point(800, 0), { color: 'green', width: 10, rotate: 0 }));
 
             // render multiline
             eng.render(multiLine);
 
             // render car
-            const car = new SimpleCar(new Point(100, 100), new Point(100, 100), 10, {
+            const car = new SimpleCar(new Point(10, 10), new Point(100, 100), 10, {
                 color: '#c23',
                 width: 1
             }, {

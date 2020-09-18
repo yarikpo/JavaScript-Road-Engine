@@ -60,19 +60,29 @@ export class Point {
         Object.render(ctx, renderPointOne, renderPointTwo)
 */
     render(ctx, renderPointOne, renderPointTwo) {
-        let radius, color;
+        let radius, color, rotate;
         if (this.style != null && this.style.radius != null) radius = this.style.radius;
         else radius = 1;
         if (this.style != null && this.style.color != null) color = this.style.color;
         else color = '#000';
+        if (this.style != null && this.style.rotate != null) rotate = this.style.rotate;
+        else rotate = 0;
 
         if (this.__insideCamera(new Point(this.x, this.y), renderPointOne, renderPointTwo)) {
             ctx.beginPath();
 
             ctx.fillStyle = color;
+            ctx.translate(this.getCord.x - renderPointOne.getCord.x, renderPointOne.getCord.y - this.getCord.y);
+            ctx.rotate((Math.PI / 180) * rotate);
+            ctx.translate((this.getCord.x - renderPointOne.getCord.x) * -1, (renderPointOne.getCord.y - this.getCord.y) * -1);
+
             ctx.arc(this.x - renderPointOne.getCord.x, renderPointOne.getCord.y - this.y, radius, 0, Math.PI * 2, false);
 
             ctx.fill();
+            
+            ctx.translate(this.getCord.x - renderPointOne.getCord.x, renderPointOne.getCord.y - this.getCord.y);
+            ctx.rotate((Math.PI / 180) * -rotate);
+            ctx.translate((this.getCord.x - renderPointOne.getCord.x) * -1, (renderPointOne.getCord.y - this.getCord.y) * -1);
             ctx.fillStyle = '#000';
             ctx.closePath();
         }

@@ -134,10 +134,23 @@ export class Line {
         if (this._isVisible(renderPointOne, renderPointTwo)) {
             ctx.beginPath();
             // checks line for styles
+            let rotate = 0;
             if (this.style != null && this.style.color != null) ctx.strokeStyle = this.style.color;
             else ctx.strokeStyle = '#000';
             if (this.style != null && this.style.width != null) ctx.lineWidth = this.style.width;
             else ctx.lineWidth = 1;
+            if (this.style != null && this.style.rotate != null) rotate = this.style.rotate;
+            else rotate = 0;
+
+            const middlePoint = new Point(
+                (this.pointOne.getCord.x + this.pointTwo.getCord.x) / 2,
+                (this.pointOne.getCord.y + this.pointTwo.getCord.y) / 2
+            );
+
+            // rotate figures
+            ctx.translate(middlePoint.getCord.x - renderPointOne.getCord.x, renderPointOne.getCord.y - middlePoint.getCord.y);
+            ctx.rotate((Math.PI / 180) * rotate);
+            ctx.translate((middlePoint.getCord.x - renderPointOne.getCord.x) * -1, (renderPointOne.getCord.y - middlePoint.getCord.y) * -1);
 
             // draws line
             ctx.moveTo(
@@ -151,6 +164,9 @@ export class Line {
 
             ctx.stroke();
             // sets values to defaults
+            ctx.translate(middlePoint.getCord.x - renderPointOne.getCord.x, renderPointOne.getCord.y - middlePoint.getCord.y);
+            ctx.rotate((Math.PI / 180) * -rotate);
+            ctx.translate((middlePoint.getCord.x - renderPointOne.getCord.x) * -1, (renderPointOne.getCord.y - middlePoint.getCord.y) * -1);
             ctx.strokeStyle = '#000';
             ctx.lineWidth = 1;
             

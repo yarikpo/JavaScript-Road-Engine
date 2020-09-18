@@ -1,4 +1,5 @@
 import {Line} from './Line';
+import { Point } from './Point';
 
 // import {Polygon} from 'path/to/Polygon'
 export class Polygon {
@@ -81,6 +82,22 @@ export class Polygon {
         return false;
     }
 
+    _getMiddlePoint(points) {
+        let left = Infinity;
+        let right = -Infinity;
+        let top = -Infinity;
+        let bottom = Infinity;
+
+        points.forEach(point => {
+            left = Math.min(left, point.getCord.x);
+            right = Math.max(right, point.getCord.x);
+            top = Math.max(top, point.getCord.y);
+            bottom = Math.min(bottom, point.getCord.y);
+        });
+
+        return new Point((left + right) / 2, (top + bottom) / 2);
+    }
+
 /*
     renders polygon
     usage:
@@ -91,10 +108,20 @@ export class Polygon {
 */
     render(ctx, renderPointOne, renderPointTwo) {
         if (this._isVisible(renderPointOne, renderPointTwo)) {
+            let rotate = 0;
+
             ctx.beginPath();
 
             if (this.style != null && this.style.color != null) ctx.fillStyle = this.style.color;
             else ctx.fillStyle = '#000';
+            if (this.style != null && this.style.rotate != null) rotate = this.style.rotate;
+            else rotate = 0;
+
+            const middlePoint = this._getMiddlePoint(this.pointArray);
+            ctx.translate(middlePoint.getCord.x - renderPointOne.getCord.x, renderPointOne.getCord.y - middlePoint.getCord.y);
+            ctx.rotate((Math.PI / 180) * rotate);
+            ctx.translate((middlePoint.getCord.x - renderPointOne.getCord.x) * -1, (renderPointOne.getCord.y - middlePoint.getCord.y) * -1);
+
 
             this.pointArray.forEach((point, pos) => {
                 if (pos === 0) ctx.moveTo(
@@ -109,6 +136,9 @@ export class Polygon {
 
             ctx.fill();
             ctx.fillStyle = '#000';
+            ctx.translate(middlePoint.getCord.x - renderPointOne.getCord.x, renderPointOne.getCord.y - middlePoint.getCord.y);
+            ctx.rotate((Math.PI / 180) * -rotate);
+            ctx.translate((middlePoint.getCord.x - renderPointOne.getCord.x) * -1, (renderPointOne.getCord.y - middlePoint.getCord.y) * -1);
             ctx.closePath();
         }
     }
