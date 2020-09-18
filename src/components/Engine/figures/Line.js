@@ -102,6 +102,9 @@ export class Line {
         this._isVisible(renderPointOne, renderPointTwo)
 */
     _isVisible(renderPointOne, renderPointTwo) {
+        // console.log(this.rot);
+        if (this.rot !== 0 && this.rot != null) return true;
+
         // declare points of corners of user camera
         const renderPointLeftTop = new Point(renderPointOne.getCord.x, renderPointOne.getCord.y);
         const renderPointRightTop = new Point(renderPointTwo.getCord.x, renderPointOne.getCord.y);
@@ -129,7 +132,9 @@ export class Line {
         renderPointTwo -> bottom right corner of user's camera
         Object.render(ctx, renderPointOne, renderPointTwo)
 */
-    render(ctx, renderPointOne, renderPointTwo) {
+    render(ctx, renderPointOne, renderPointTwo, rot) {
+        this.rot = rot;
+        // console.log(this.rot);
         // checks if line is located in render area
         if (this._isVisible(renderPointOne, renderPointTwo)) {
             ctx.beginPath();

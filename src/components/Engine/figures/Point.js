@@ -46,6 +46,7 @@ export class Point {
     usage: No usage (only in Engine)
 */
     __insideCamera(checkPoint, rectPointOne, rectPointTwo) {
+        if (this.rot !== 0 && this.rot != null) return true;
         if (checkPoint.getCord.x < rectPointOne.getCord.x) return false;
         if (checkPoint.getCord.x > rectPointTwo.getCord.x) return false;
         if (checkPoint.getCord.y > rectPointOne.getCord.y) return false;
@@ -59,7 +60,9 @@ export class Point {
     usage:
         Object.render(ctx, renderPointOne, renderPointTwo)
 */
-    render(ctx, renderPointOne, renderPointTwo) {
+    render(ctx, renderPointOne, renderPointTwo, rot) {
+        this.rot = rot;
+
         let radius, color, rotate;
         if (this.style != null && this.style.radius != null) radius = this.style.radius;
         else radius = 1;

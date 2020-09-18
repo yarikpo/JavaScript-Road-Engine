@@ -117,7 +117,7 @@ export class MultiLine {
 
         Object.render(ctx, renderPointOne, renderPointTwo) 
 */
-    render(ctx, renderPointOne, renderPointTwo) {
+    render(ctx, renderPointOne, renderPointTwo, rot) {
         let rotate = 0;
         if (this.style != null && this.style.rotate != null) rotate = this.style.rotate;
         else rotate = 0;
@@ -136,7 +136,7 @@ export class MultiLine {
 
         // renders each line
         this.lineArray.forEach(line => {
-            line.render(ctx, renderPointOne, renderPointTwo);
+            line.render(ctx, renderPointOne, renderPointTwo, rot);
         });
 
         // sets values to default

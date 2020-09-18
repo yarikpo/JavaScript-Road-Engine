@@ -106,7 +106,7 @@ export class Polygon {
 
         Object.render(ctx, renderPointOne, renderPointTwo) 
 */
-    render(ctx, renderPointOne, renderPointTwo) {
+    render(ctx, renderPointOne, renderPointTwo, rot) {
         if (this._isVisible(renderPointOne, renderPointTwo)) {
             let rotate = 0;
 

@@ -119,11 +119,13 @@ export class SimpleCar {
     //     return new Point((left + right) / 2, (top + bottom) / 2);
     // }
 
-    render(ctx, renderPointOne, renderPointTwo) {
+    render(ctx, renderPointOne, renderPointTwo, rot) {
         // turns by clockwise
         const angle = -this.__getAngle(this.carPosition, this.newCarPosition);
 
         this.strokeStyle.rotate = angle;
+        this.strokeStyle.rot = rot;
+        this.polyStyle.rot = rot;
         this.polyStyle.rotate = angle;
 
         const strokeCar = new MultiLine([

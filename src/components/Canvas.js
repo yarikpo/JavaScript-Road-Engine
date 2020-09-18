@@ -42,7 +42,9 @@ class Canvas extends React.Component {
             // position of each car
             carPositions: [],
             // certanly got positions of each car
-            newCarPositions: []
+            newCarPositions: [],
+            // rotated angle
+            rotated: 0
         };
 
         this.updateCanvas = this.updateCanvas.bind(this);
@@ -53,6 +55,9 @@ class Canvas extends React.Component {
 
         this.handleClickScalePlus = this.handleClickScalePlus.bind(this);
         this.handleClickScaleMinus = this.handleClickScaleMinus.bind(this);
+
+        this.handleClickTurnLeft = this.handleClickTurnLeft.bind(this);
+        this.handleClickTurnRight = this.handleClickTurnRight.bind(this);
     }
 
     componentDidMount() {
@@ -98,7 +103,8 @@ class Canvas extends React.Component {
 
             const ctx = this.refs.canvas.getContext('2d');
             // clears screen
-            ctx.clearRect(0, 0, this.state.windowWidth * this.state.scale, this.state.windowHeight * this.state.scale);
+            ctx.clearRect(this.state.windowWidth * this.state.scale * -1, 0, this.state.windowWidth * this.state.scale * 2, this.state.windowHeight * this.state.scale * 2);
+            if (this.state.rotated !== 0) ctx.clearRect(this.state.windowWidth * this.state.scale * -2, this.state.windowHeight * this.state.scale * -2, this.state.windowWidth * this.state.scale * 2, this.state.windowHeight * this.state.scale * 2);
 
             // creates two points which shows position of user camera
             const renderPointOne = new Point(
@@ -110,7 +116,8 @@ class Canvas extends React.Component {
                 (this.state.renderShowTopLeftCordY - this.state.windowHeight) * this.state.scale
             );
             // creates engine -> and turns on user camera(all info on screen)
-            const eng = new Engine(ctx, renderPointOne, renderPointTwo);
+            // console.log(this.state.rotated);
+            const eng = new Engine(ctx, renderPointOne, renderPointTwo, this.state.rotated);
 
 
             // turn screen
@@ -169,6 +176,35 @@ class Canvas extends React.Component {
             Object.keys(ctx).forEach(key => delete ctx[key]);
 
         }, this.state.animationInterval);
+    }
+
+    // turns camera
+    handleClickTurnLeft(e) {
+        const ctx = this.refs.canvas.getContext('2d');
+        const rotate = 10;
+        const rotated = this.state.rotated + rotate;
+
+        console.log('left');
+        ctx.rotate((Math.PI / 180) * rotate);
+        console.log(rotated);
+        this.setState({ rotated: rotated });
+
+
+        Object.keys(ctx).forEach(key => delete ctx[key]);
+    }
+
+    handleClickTurnRight(e) {
+        const ctx = this.refs.canvas.getContext('2d');
+        const rotate = -10;
+        const rotated = this.state.rotated + rotate;
+
+        console.log('right');
+        ctx.rotate((Math.PI / 180) * rotate);
+        console.log(rotated);
+        this.setState({ rotated: rotated });
+
+
+        Object.keys(ctx).forEach(key => delete ctx[key]);
     }
 
     // scale
@@ -252,6 +288,9 @@ class Canvas extends React.Component {
                 <canvas ref='canvas' width={this.state.windowWidth} height={this.state.windowHeight} />
                 <button onClick={this.handleClickScalePlus}>+</button>
                 <button onClick={this.handleClickScaleMinus}>-</button>
+                <br />
+                <button onClick={this.handleClickTurnLeft}>&#60;-</button>
+                <button onClick={this.handleClickTurnRight}>-&#62;</button>
             </div>
         )
     }

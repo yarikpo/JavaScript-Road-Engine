@@ -10,8 +10,9 @@ const DEBUG = false;
 
 // import {Engine} from 'path/to/Engine'
 export class Engine {
-    constructor(ctx, renderPointOne, renderPointTwo) {
+    constructor(ctx, renderPointOne, renderPointTwo, rotate) {
         this.ctx = ctx;
+        this.rotate = rotate;
         
         // Cors of left up render point
         this.renderPointOne = new Point(
@@ -71,7 +72,7 @@ export class Engine {
 
 
     render(object) {
-        object.render(this.ctx, this.renderPointOne, this.renderPointTwo);
+        object.render(this.ctx, this.renderPointOne, this.renderPointTwo, this.rotate);
     }
 }
 
