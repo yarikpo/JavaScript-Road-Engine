@@ -103,6 +103,9 @@ export class Line {
 */
     _isVisible(renderPointOne, renderPointTwo) {
         // console.log(this.rot);
+        // TODO fix bug with rotation
+        if (1) return true;
+
         if (this.rot !== 0 && this.rot != null) return true;
 
         // declare points of corners of user camera

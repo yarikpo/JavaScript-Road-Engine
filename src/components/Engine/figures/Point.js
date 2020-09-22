@@ -28,11 +28,11 @@ export class Point {
     usage:
         Object.setCord(x, y)
 */
-    setCord(x, y, DEBUG=false) {
+    setCord(x, y) {
         this.x = x;
         this.y = y;
 
-        if (DEBUG) console.log('Point cords have been changed');
+        // if (DEBUG) console.log('Point cords have been changed');
     }
 
 /*

@@ -4,12 +4,14 @@ import {Polygon} from '../Polygon';
 // import { Line } from '../Line';
 
 export class SimpleCar {
-    constructor(carPosition, newCarPosition, size=100, strokeStyle=undefined, polyStyle=undefined) {
+    constructor(carPosition, newCarPosition, size=100, timeStart=new Date().getTime(), timeFinish=new Date().getTime() + 10000, strokeStyle=undefined, polyStyle=undefined) {
         this.carPosition = carPosition;
         this.newCarPosition = newCarPosition;
         this.size = size;
         this.strokeStyle = strokeStyle;
         this.polyStyle = polyStyle;
+        this.timeStart = timeStart;
+        this.timeFinish = timeFinish;
 
         this.wholeAngle = 0;
     }
@@ -122,6 +124,16 @@ export class SimpleCar {
     render(ctx, renderPointOne, renderPointTwo, rot) {
         // turns by clockwise
         const angle = -this.__getAngle(this.carPosition, this.newCarPosition);
+
+        const timeNow = new Date().getTime();
+        const partDistance = (timeNow - this.timeStart) / (this.timeFinish - this.timeStart);
+        // console.log(partDistance);
+
+        this.newCarPosition.setCord(
+            this.carPosition.getCord.x + (this.newCarPosition.getCord.x - this.carPosition.getCord.x) * Math.min(1, partDistance),
+            this.carPosition.getCord.y + (this.newCarPosition.getCord.y - this.carPosition.getCord.y) * Math.min(1, partDistance),
+            false
+        );
 
         this.strokeStyle.rotate = angle;
         this.strokeStyle.rot = rot;

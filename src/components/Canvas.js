@@ -3,7 +3,7 @@ import './Canvas.css';
 
 import {Engine} from './Engine/Engine';
 import {Point} from './Engine/figures/Point';
-import {Line} from './Engine/figures/Line';
+// import {Line} from './Engine/figures/Line';
 import {MultiLine} from './Engine/figures/MultiLine';
 import {Polygon} from './Engine/figures/Polygon';
 import {SimpleCar} from './Engine/figures/Cars/SimpleCar';
@@ -128,7 +128,7 @@ class Canvas extends React.Component {
             // eng.rect(rectPointOne, rectPointTwo);
 
             // creates and displays line
-            eng.render(new Line(new Point(400, 400), new Point(500, 500), { rotate: 0 }));
+            // eng.render(new Line(new Point(400, 400), new Point(500, 500), { rotate: 0 }));
             // eng.render(new Line(new Point(600, 600), new Point(800, 550)));
 
             const multiLine = new MultiLine([
@@ -159,11 +159,13 @@ class Canvas extends React.Component {
             // eng.render(multiLine);
 
             // road rendering
-            const road1 = new UsualRoad_1(new Point(300, 300), new Point(600, 300), 35);
+            const road1 = new UsualRoad_1(new Point(300, 300), new Point(600, 600), 15);
             eng.render(road1);
 
             // render car
-            const car = new SimpleCar(new Point(90, 90), new Point(100, 100), 10, {
+            const startTime = 1600767155803;
+            const finishTime = 1600767495803;
+            const car = new SimpleCar(new Point(90, 90), new Point(1000, 1000), 30, startTime, finishTime, {
                 color: '#c23',
                 width: 1
             }, {
