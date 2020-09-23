@@ -17,8 +17,8 @@ export class UsualRoad_1 {
 
         // console.log(this.point1, this.point2);
 
-        this.pointA = new Point(this.point1.getCord.x, this.point1.getCord.y + width);
-        this.pointC = new Point(this.point2.getCord.x, this.point2.getCord.y - width);
+        this.pointA = new Point(this.point1.getCord.x, this.point1.getCord.y + 1 * width);
+        this.pointC = new Point(this.point2.getCord.x, this.point2.getCord.y - 1 * width);
         this.width = width;
         this.style = style;
     }
@@ -99,7 +99,7 @@ export class UsualRoad_1 {
 
         roadRnd.render(ctx, renderPointOne, renderPointTwo);
         
-        for (let i = 0; i < laneNumber; ++i) {
+        for (let i = 0; i < laneNumber - 2; ++i) {
             // TODO fix bug with lanes
             const beginEndDistance = (parameters.space - (parameters.laneDistance + parameters.laneWidth) * laneNumber + parameters.laneDistance) / 2;
 

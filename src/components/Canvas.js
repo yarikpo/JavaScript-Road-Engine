@@ -159,8 +159,15 @@ class Canvas extends React.Component {
             // eng.render(multiLine);
 
             // road rendering
+            // eng.render(new Point(300, 300, {radius: 10}));
             const road1 = new UsualRoad_1(new Point(300, 300), new Point(600, 600), 15);
+            const road2 = new UsualRoad_1(new Point(600, 600), new Point(900, 600), 15);
+            const road3 = new UsualRoad_1(new Point(400, 700), new Point(600, 600), 15);
+            const road4 = new UsualRoad_1(new Point(600, 600), new Point(600, 800), 15);
             eng.render(road1);
+            eng.render(road2);
+            eng.render(road3);
+            // eng.render(road4);
 
             // render car
             const startTime = 1600767155803;
