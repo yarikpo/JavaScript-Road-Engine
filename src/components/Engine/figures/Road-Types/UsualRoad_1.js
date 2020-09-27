@@ -9,6 +9,8 @@ import {Polygon} from '../Polygon';
 export class UsualRoad_1 {
      
     constructor(point1, point2, width, style=undefined){
+        if (point1.getCord.x > point2.getCord.x) [point1, point2] = [point2, point1];
+
         const distance = Math.sqrt((point1.getCord.x - point2.getCord.x) ** 2 + (point1.getCord.y - point2.getCord.y) ** 2);
 
         this.rotate = -this.__getAngle(point1, point2);
@@ -94,12 +96,14 @@ export class UsualRoad_1 {
             this.pointD = new Point (this.pointA.getCord.x, this.pointC.getCord.y)
         ], {color:'grey', rot: rot});
 
+        
+
         const laneNumber = this._roadLaneAmount();
 
 
         roadRnd.render(ctx, renderPointOne, renderPointTwo);
         
-        for (let i = 0; i < laneNumber - 2; ++i) {
+        for (let i = 3; i < laneNumber - 3; ++i) {
             // TODO fix bug with lanes
             const beginEndDistance = (parameters.space - (parameters.laneDistance + parameters.laneWidth) * laneNumber + parameters.laneDistance) / 2;
 
@@ -122,6 +126,18 @@ export class UsualRoad_1 {
             ], {color:'white', rot: rot});
             laneRnd.render(ctx, renderPointOne, renderPointTwo);   
         }
+
+        const circleBegin =  new Point(this.pointA.getCord.x + this.width * 0, this.pointA.getCord.y - this.width * 1, { radius: this.width, color: 'grey' });
+        const circleFinish = new Point(this.pointC.getCord.x - this.width * 0, this.pointC.getCord.y + this.width * 1, { radius: this.width, color: 'grey' });
+
+        // const circleBeginDot =  new Point(this.pointA.getCord.x + this.width * 0, this.pointA.getCord.y - this.width * 1, { radius: this.width / 4, color: 'white' });
+        // const circleFinishDot = new Point(this.pointC.getCord.x - this.width * 0, this.pointC.getCord.y + this.width * 1, { radius: this.width / 4, color: 'white' });
+
+        circleBegin.render(ctx, renderPointOne, renderPointTwo, rot);
+        circleFinish.render(ctx, renderPointOne, renderPointTwo, rot);
+
+        // circleBeginDot.render(ctx, renderPointOne, renderPointTwo, rot);
+        // circleFinishDot.render(ctx, renderPointOne, renderPointTwo, rot);
 
         ctx.translate(middlePoint.getCord.x - renderPointOne.getCord.x, renderPointOne.getCord.y - middlePoint.getCord.y);
         ctx.rotate((Math.PI / 180) * -rotate);

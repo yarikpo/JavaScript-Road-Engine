@@ -45,12 +45,14 @@ export class Point {
     checks if point is inside rect
     usage: No usage (only in Engine)
 */
-    __insideCamera(checkPoint, rectPointOne, rectPointTwo) {
+    __insideCamera(checkPoint, radius, rectPointOne, rectPointTwo) {
+        if (1) return true;
+
         if (this.rot !== 0 && this.rot != null) return true;
-        if (checkPoint.getCord.x < rectPointOne.getCord.x) return false;
-        if (checkPoint.getCord.x > rectPointTwo.getCord.x) return false;
-        if (checkPoint.getCord.y > rectPointOne.getCord.y) return false;
-        if (checkPoint.getCord.y < rectPointTwo.getCord.y) return false;
+        if (checkPoint.getCord.x + radius < rectPointOne.getCord.x) return false;
+        if (checkPoint.getCord.x - radius > rectPointTwo.getCord.x) return false;
+        if (checkPoint.getCord.y - radius > rectPointOne.getCord.y) return false;
+        if (checkPoint.getCord.y + radius < rectPointTwo.getCord.y) return false;
         
         return true;
     }
@@ -71,7 +73,7 @@ export class Point {
         if (this.style != null && this.style.rotate != null) rotate = this.style.rotate;
         else rotate = 0;
 
-        if (this.__insideCamera(new Point(this.x, this.y), renderPointOne, renderPointTwo)) {
+        if (this.__insideCamera(new Point(this.x, this.y), radius, renderPointOne, renderPointTwo)) {
             ctx.beginPath();
 
             ctx.fillStyle = color;

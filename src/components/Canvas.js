@@ -151,7 +151,7 @@ class Canvas extends React.Component {
             // render polygon
             // eng.render(polygon);
 
-            // eng.render(new Point(100, 300, {color: 'red', radius: 5, rotate: 0}));
+            // eng.render(new Point(100, 300, {color: 'red', radius: 15, rotate: 0}));
 
             // eng.render(new Line(new Point(0, 600), new Point(800, 0), { color: 'green', width: 10, rotate: 0 }));
 
@@ -160,13 +160,41 @@ class Canvas extends React.Component {
 
             // road rendering
             // eng.render(new Point(300, 300, {radius: 10}));
-            const road1 = new UsualRoad_1(new Point(300, 300), new Point(600, 600), 15);
-            const road2 = new UsualRoad_1(new Point(600, 600), new Point(900, 600), 15);
-            const road3 = new UsualRoad_1(new Point(400, 700), new Point(600, 600), 15);
-            const road4 = new UsualRoad_1(new Point(600, 600), new Point(600, 800), 15);
+            // const road1 = new UsualRoad_1(new Point(200, 600), new Point(400, 800), 15);
+            // const road2 = new UsualRoad_1(new Point(400, 800), new Point(600, 600), 15);
+            // const road3 = new UsualRoad_1(new Point(600, 600), new Point(800, 400), 15);
+            // const road4 = new UsualRoad_1(new Point(800, 400), new Point(1000, 600), 15);
+            // const road5 = new UsualRoad_1(new Point(600, 200), new Point(400, 400), 15);
+            // const road6 = new UsualRoad_1(new Point(400, 400), new Point(600, 600), 15);
+            // const road7 = new UsualRoad_1(new Point(600, 600), new Point(800, 800), 15);
+            // const road8 = new UsualRoad_1(new Point(800, 800), new Point(600, 1000), 15);
+            // const road4 = new UsualRoad_1(new Point(600, 600), new Point(600, 800), 15);
+            // eng.render(road1);
+            // eng.render(road2);
+            // eng.render(road3);
+            // eng.render(road4);
+            // eng.render(road5);
+            // eng.render(road6);
+            // eng.render(road7);
+            // eng.render(road8);
+
+            const road1 = new UsualRoad_1(new Point(200, 0), new Point(400, 200), 15);
+            const road2 = new UsualRoad_1(new Point(400, 200), new Point(0, 400), 15);
+            const road3 = new UsualRoad_1(new Point(400, 200), new Point(200, 600), 15);
+            const road4 = new UsualRoad_1(new Point(600, 600), new Point(400, 200), 15);
+
             eng.render(road1);
             eng.render(road2);
             eng.render(road3);
+            eng.render(road4);
+
+            const road2_1 = new UsualRoad_1(new Point(200, 2000), new Point(400, 2200), 15);
+            const road2_2 = new UsualRoad_1(new Point(400, 2200), new Point(400, 2600), 15);
+            const road2_3 = new UsualRoad_1(new Point(400, 2200), new Point(800, 2000), 15);
+
+            eng.render(road2_1);
+            eng.render(road2_2);
+            eng.render(road2_3);
             // eng.render(road4);
 
             // render car
